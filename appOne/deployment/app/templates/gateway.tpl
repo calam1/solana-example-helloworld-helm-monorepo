@@ -4,9 +4,9 @@ kind: Gateway
 metadata:
   annotations:
     type: internal
-  name: {{ include "solana-helm.fullname" . }}
+  name: {{ include "solana-helm-one.fullname" . }}
   labels:
-    {{- include "solana-helm.labels" . | nindent 4 }}
+    {{- include "solana-helm-one.labels" . | nindent 4 }}
 spec:
   selector:
     istio: ilbgateway
