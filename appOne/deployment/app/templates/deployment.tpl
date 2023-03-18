@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "solana-helm.fullname" . }}
+  name: {{ include "solana-helm-one.fullname" . }}
   labels:
-    {{- include "solana-helm.labels" . | nindent 4 }}
+    {{- include "solana-helm-one.labels" . | nindent 4 }}
   {{- with .Values.deployment.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -15,11 +15,11 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "solana-helm.selectorLabels" . | nindent 6 }}
+      {{- include "solana-helm-one.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "solana-helm.labels" . | nindent 8 }}
+        {{- include "solana-helm-one.labels" . | nindent 8 }}
       annotations:
         {{- tpl ( .Values.deployment.pod.annotations | toYaml ) . | nindent 8 }}
     spec:
@@ -34,7 +34,6 @@ spec:
           {{- if .Values.deployment.startScript }}
           {{- tpl ( .Values.deployment.startScript) . | nindent 10 }}
           {{- end }}
-          image: {{ include "solana-helm.container" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             {{- toYaml .Values.deployment.ports | nindent 12 }}
