@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "solana-helm.fullname" -}}
+{{- define "solana-helm-one.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,54 +26,54 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "solana-helm.chart" -}}
+{{- define "solana-helm-one.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "solana-helm.labels" -}}
-helm.sh/chart: {{ include "solana-helm.chart" . }}
-app: {{ include "solana-helm.name" . }}
+{{- define "solana-helm-one.labels" -}}
+helm.sh/chart: {{ include "solana-helm-one.chart" . }}
+app: {{ include "solana-helm-one.name" . }}
 version: {{ default .Chart.AppVersion .Values.tag }}
-{{ include "solana-helm.selectorLabels" . }}
+{{ include "solana-helm-one.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- include "solana-helm.fakeLabels" . }}
+{{- include "solana-helm-one.fakeLabels" . }}
 {{- end }}
 
-{{- define "solana-helm-db.labels" -}}
-helm.sh/chart: {{ include "solana-helm.chart" . }}
-app: {{ include "solana-helm.name" . }}
+{{- define "solana-helm-one-db.labels" -}}
+helm.sh/chart: {{ include "solana-helm-one.chart" . }}
+app: {{ include "solana-helm-one.name" . }}
 version: {{ default .Chart.AppVersion .Values.tag }}
-{{ include "solana-helm-db.selectorLabels" . }}
+{{ include "solana-helm-one-db.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- include "solana-helm.fakeLabels" . }}
+{{- include "solana-helm-one.fakeLabels" . }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
-{{- define "solana-helm.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "solana-helm.name" . }}
+{{- define "solana-helm-one.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "solana-helm-one.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "solana-helm-db.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "solana-helm.name" . }}-db
+{{- define "solana-helm-one-db.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "solana-helm-one.name" . }}-db
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 fake labels
 */}}
-{{- define "solana-helm.fakeLabels" -}}
+{{- define "solana-helm-one.fakeLabels" -}}
 {{- if .Values.teamname }}
 fake.com/managed-by-team: {{ .Values.teamname }}
 {{- end -}}
@@ -85,7 +85,7 @@ fake.com/repo: {{ .Values.reponame }}
 {{/*
 Image Repository
 */}}
-{{- define "solana-helm.container" -}}
+{{- define "solana-helm-one.container" -}}
 {{- if .Values.image.registry }}
 {{- .Values.image.registry -}}
     /
@@ -95,7 +95,7 @@ Image Repository
 {{- .Values.image.tag | default .Chart.AppVersion }}
 {{- end -}}
 
-{{ define "solana-helm-db.dbServiceHost" -}}
+{{ define "solana-helm-one-db.dbServiceHost" -}}
 {{- if eq .Values.db.type "local" -}}
 {{- include "solana-helm-db.fullname" . -}}
 {{- else -}}
@@ -103,7 +103,7 @@ Image Repository
 {{- end -}}
 {{- end }}
 
-{{- define "solana-helm-db.fullname" -}}
+{{- define "solana-helm-one-db.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 60 | trimSuffix "-" }}-db
 {{- else }}
