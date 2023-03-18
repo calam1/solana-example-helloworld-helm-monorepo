@@ -1,0 +1,12 @@
+---
+environment: dev
+fqdn: solana-helm.aws.com
+
+db: us-west-1.rds.amazonaws.com
+
+gateway:
+  enabled: true
+  tlsCredentialName: default-dev-solana-helm
+
+deployment:
+  env: |

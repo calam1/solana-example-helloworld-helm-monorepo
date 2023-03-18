@@ -1,0 +1,67 @@
+---
+name: solana-helm-one
+environment: dev
+cluster: sandbox
+version: 0.0.1
+teamname: default
+reponame: solana-helm
+imagePullSecrets: []
+
+gateway:
+  enabled: true
+  tlsCredentialName: ""
+  httpsRedirect: true
+
+service:
+  type: ClusterIP
+  port: 80
+  annotations:
+
+image:
+  registry: ecr.us-east-2.amazonaws.com
+  repository: solana-helm
+  pullPolicy: IfNotPresent
+  tag: latest
+
+deployment:
+  annotations:
+
+  pod:
+    annotations:
+
+  ports:
+    - name: http
+      containerPort: 3000
+      protocol: TCP
+
+  livenessProbe:
+    httpGet:
+      path: /api/hello
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 5
+
+  readinessProbe:
+    httpGet:
+      path: /api/hello
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 5
+
+  replicaCount: 1
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    minAvailable: 1
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 70
+  resources:
+    limits:
+      cpu: 1.5
+      memory: 1Gi
+    requests:
+      cpu: 50m
+      memory: 256Mi
+
+  startScript:
