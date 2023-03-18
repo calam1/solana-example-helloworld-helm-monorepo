@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "solana-helm.fullname" . }}
+  name: {{ include "solana-helm-one.fullname" . }}
   labels:
-    {{- include "solana-helm.labels" . | nindent 4 }}
+    {{- include "solana-helm-one.labels" . | nindent 4 }}
   {{- with .Values.service.annotations }}
   annotations:
     {{- range $key, $value := . }}
@@ -20,4 +20,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "solana-helm.selectorLabels" . | nindent 4 }}
+    {{- include "solana-helm-one.selectorLabels" . | nindent 4 }}
