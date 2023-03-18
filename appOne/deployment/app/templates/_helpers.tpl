@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "solana-helm.name" -}}
+{{- define "solana-helm-one.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -97,7 +97,7 @@ Image Repository
 
 {{ define "solana-helm-one-db.dbServiceHost" -}}
 {{- if eq .Values.db.type "local" -}}
-{{- include "solana-helm-db.fullname" . -}}
+{{- include "solana-helm-one-db.fullname" . -}}
 {{- else -}}
 {{- .Values.db.serviceHost -}}
 {{- end -}}
