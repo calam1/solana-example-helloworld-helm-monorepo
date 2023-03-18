@@ -4,7 +4,7 @@ environment: dev
 cluster: sandbox
 version: 0.0.1
 teamname: default
-reponame: solana-helm
+reponame: solana-helm-one
 imagePullSecrets: []
 
 gateway:
@@ -19,7 +19,7 @@ service:
 
 image:
   registry: ecr.us-east-2.amazonaws.com
-  repository: solana-helm
+  repository: solana-helm-one
   pullPolicy: IfNotPresent
   tag: latest
 
